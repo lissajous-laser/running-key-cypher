@@ -25,7 +25,7 @@ public class Cypher {
      */
     public String encrypt(FileInputStream fileInput, int startingChar)
             throws IOException {
-        String cypherText = "";
+        StringBuilder cypherText = new StringBuilder();
 
         fileInput.skip(startingChar);
 
@@ -51,9 +51,9 @@ public class Cypher {
             if (shiftedLetter > asciiZ) {
                 shiftedLetter -= asciiRange;
             }
-            cypherText += (char) shiftedLetter;
+            cypherText.append((char) shiftedLetter);
         }
-        return cypherText;
+        return cypherText.substring(0);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Cypher {
      */
     public String decrypt(FileInputStream fileInput, int startingChar)
             throws IOException {
-        String plainText = "";
+        StringBuilder plainText = new StringBuilder(text.size());
 
         fileInput.skip(startingChar);
 
@@ -89,9 +89,9 @@ public class Cypher {
             if (shiftedLetter < asciiA) {
                 shiftedLetter += asciiRange;
             }
-            plainText += (char) shiftedLetter;
+            plainText.append((char) shiftedLetter);
         }
-        return plainText;
+        return plainText.substring(0);
     }
 
     private ArrayList<Integer> sanitiseString(String str) {
