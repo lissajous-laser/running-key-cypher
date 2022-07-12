@@ -1,17 +1,18 @@
 package com.lissajouxlaser;
 
 /**
- * Hello world!
+ * Class containing main().
  */
 public final class App {
-    private App() {
-    }
+
+    private App() {}
 
     /**
-     * Says hello to the world.
+     * A running key cypher.
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        TextUI textUI = new TextUI();
+        textUI.start();
     }
 }
