@@ -18,18 +18,6 @@ public class Cypher {
     }
 
     /**
-     * Returns sanitised version of text.
-     */
-    @Override
-    public String toString() {
-        String str = "";
-        for (Integer b : text) {
-            str += (char) (int) b;
-        }
-        return str;
-    }
-
-    /**
      * Returns encrypted text.
      *
      * @return cyphertext as String. If the plaintext is longer
@@ -53,7 +41,7 @@ public class Cypher {
                 sanitisedByte = sanitiseByte((int) byteFromKey);
                 // Test if byte representes a letter, discard
                 // and read next byte if it isn't
-                if (sanitisedByte != 1) {
+                if (sanitisedByte != -1) {
                     break;
                 }
             }
@@ -92,7 +80,7 @@ public class Cypher {
                 santisedByte = sanitiseByte(byteFromKey);
                 // Test if byte representes a letter, discard
                 // and read next byte if it isn't
-                if (santisedByte != 1) {
+                if (santisedByte != -1) {
                     break;
                 }
             }
@@ -136,39 +124,3 @@ public class Cypher {
         return -1;
     }
 }
-
-// public String encrypt(String keyAsStr) {
-// ArrayList<Byte> key = sanitise(keyAsStr);
-// String cypherText = "";
-
-// if (text.size() > key.size()) {
-// return cypherText;
-// }
-// for (int i = 0; i < text.size(); i++) {
-// int shiftedLetter = text.get(i) + (key.get(i) - asciiA);
-
-// if (shiftedLetter > asciiZ) {
-// shiftedLetter -= asciiRange;
-// }
-// cypherText += (char) shiftedLetter;
-// }
-// return cypherText;
-// }
-
-// public String decrypt(String keyAsStr) {
-// ArrayList<Byte> key = sanitise(keyAsStr);
-// String plainText = "";
-
-// if (text.size() > key.size()) {
-// return plainText;
-// }
-// for (int i = 0; i < text.size(); i++) {
-// int shiftedLetter = text.get(i) - (key.get(i) - asciiA);
-
-// if (shiftedLetter < asciiA) {
-// shiftedLetter += asciiRange;
-// }
-// plainText += (char) shiftedLetter;
-// }
-// return plainText;
-// }

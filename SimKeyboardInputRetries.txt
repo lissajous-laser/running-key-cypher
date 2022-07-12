@@ -1,0 +1,8 @@
+
+QVEN|KSNA/HCUM FUJJ\PFUB|
+-1
+2
+isthisafile.txt
+BromidePrinting.txt
+-1
+2500

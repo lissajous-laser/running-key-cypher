@@ -25,10 +25,10 @@ public class TextUI {
     /**
      * Starting point of UI.
      */
-    public void start() {
+    public String start() {
         makeCypher();
         setOperation();
-        fileHandling();
+        return fileHandling();
     }
 
     private void makeCypher() {
@@ -68,7 +68,7 @@ public class TextUI {
 
     // File related exceptions lead to recursion so user can
     // retry.
-    private void fileHandling() {
+    private String fileHandling() {
         while (true) {
             System.out.println("\nEnter the filename containing key "
                     + "(file must be unformatted UTF-8 text)");
@@ -80,13 +80,12 @@ public class TextUI {
                 if ("encrypt".equals(operation)) {
                     String output = cypher.encrypt(fileInput, startingChar);
                     System.out.println(output);
+                    return output;
                 } else {
                     String output = cypher.decrypt(fileInput, startingChar);
                     System.out.println(output);
+                    return output;
                 }
-
-                break;
-
             } catch (FileNotFoundException e) {
                 System.out.println("File does not exist. Please retry.");
             } catch (IOException e) {
@@ -100,19 +99,22 @@ public class TextUI {
     private void setCharNumber(FileInputStream fileInput) throws IOException {
         System.out.println("Enter how many characters into the file "
                 + "the key starts.");
-        String input = keyboardScan.nextLine();
 
-        if (input.matches("\\d+")) {
+        while (true) {
+            String input = keyboardScan.nextLine();
+            if (input.matches("\\d+")) {
 
-            if (Integer.valueOf(input) < fileInput.getChannel().size()) {
-                startingChar = Integer.valueOf(input);
+                if (Integer.valueOf(input) < fileInput.getChannel().size()) {
+                    startingChar = Integer.valueOf(input);
+                    break;
+                } else {
+                    System.out.println("The key starting position exceeds "
+                            + "the file length. Please retry.");
+                    setCharNumber(fileInput);
+                }
             } else {
-                System.out.println("The key starting position exceeds "
-                        + "the file length. Please retry.");
-                setCharNumber(fileInput);
+                System.out.println("Not a valid number. Please retry.");
             }
-        } else {
-            System.out.println("Not a valid number. Please retry.");
         }
     }
 }
