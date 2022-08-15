@@ -1,4 +1,4 @@
-package com.lissajouxlaser;
+package com.lissajouslaser;
 
 import org.junit.jupiter.api.Test;
 

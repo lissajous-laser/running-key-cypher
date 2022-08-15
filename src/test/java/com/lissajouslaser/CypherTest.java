@@ -1,4 +1,4 @@
-package com.lissajouxlaser;
+package com.lissajouslaser;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,22 +32,22 @@ public class CypherTest {
     }
 
     @Test
-    public void encryptReturnsEmptyWhenKeyTooShort() {
+    public void encryptReturnsNullWhenKeyTooShort() {
         Cypher cypher = new Cypher("Attack at Dawn");
         try {
             FileInputStream fileInput = new FileInputStream("lemons.txt");
-            assertEquals("", cypher.encrypt(fileInput, (int) fileInput.getChannel().size() - 1));
+            assertEquals(null, cypher.encrypt(fileInput, (int) fileInput.getChannel().size() - 1));
         } catch (IOException e) {
             System.out.println("Error has occurred: " + e);
         }
     }
 
     @Test
-    public void decryptReturnsEmptyWhenKeyTooShort() {
+    public void decryptReturnsNullWhenKeyTooShort() {
         Cypher cypher = new Cypher("LXFOPVEFRNHR");
         try {
             FileInputStream fileInput = new FileInputStream("lemons.txt");
-            assertEquals("", cypher.decrypt(fileInput, (int) fileInput.getChannel().size() - 1));
+            assertEquals(null, cypher.decrypt(fileInput, (int) fileInput.getChannel().size() - 1));
         } catch (IOException e) {
             System.out.println("Error has occurred: " + e);
         }

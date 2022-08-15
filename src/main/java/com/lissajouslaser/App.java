@@ -1,4 +1,4 @@
-package com.lissajouxlaser;
+package com.lissajouslaser;
 
 /**
  * Class containing main().
@@ -14,5 +14,6 @@ public final class App {
     public static void main(String[] args) {
         TextUI textUI = new TextUI();
         textUI.start();
+
     }
 }

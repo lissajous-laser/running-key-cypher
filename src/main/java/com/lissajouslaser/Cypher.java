@@ -1,4 +1,4 @@
-package com.lissajouxlaser;
+package com.lissajouslaser;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Provides functionality for encrytion and decryption of text.
  */
 public class Cypher {
-    private final int asciiA = (int) 'A';
-    private final int asciiZ = (int) 'Z';
-    private final int asciiRange = 26;
+    private final int utfA = (int) 'A';
+    private final int utfZ = (int) 'Z';
+    private final int utfRange = 26;
     private ArrayList<Integer> text; // text to be encrypted or decrypted
 
     Cypher(String text) {
@@ -19,9 +19,8 @@ public class Cypher {
 
     /**
      * Returns encrypted text.
-     *
-     * @return cyphertext as String. If the plaintext is longer
-     *         than the key, an empty String is returned.
+     * If the plaintext is longer
+     * than the key, null is returned.
      */
     public String encrypt(FileInputStream fileInput, int startingChar)
             throws IOException {
@@ -36,7 +35,7 @@ public class Cypher {
                 int byteFromKey = fileInput.read();
                 // Test if end of file
                 if (byteFromKey == -1) {
-                    return "";
+                    return null;
                 }
                 sanitisedByte = sanitiseByte((int) byteFromKey);
                 // Test if byte representes a letter, discard
@@ -46,10 +45,10 @@ public class Cypher {
                 }
             }
 
-            int shiftedLetter = text.get(i) + (sanitisedByte - asciiA);
+            int shiftedLetter = text.get(i) + (sanitisedByte - utfA);
 
-            if (shiftedLetter > asciiZ) {
-                shiftedLetter -= asciiRange;
+            if (shiftedLetter > utfZ) {
+                shiftedLetter -= utfRange;
             }
             cypherText.append((char) shiftedLetter);
         }
@@ -57,10 +56,9 @@ public class Cypher {
     }
 
     /**
-     * Returns decrypted text.
-     *
-     * @return plaintext as String. If the cyphertext is longer
-     *         than the key, an empty String is returned.
+     * Returns encrypted text.
+     * If the cyphertext is longer
+     * than the key, null is returned.
      */
     public String decrypt(FileInputStream fileInput, int startingChar)
             throws IOException {
@@ -75,7 +73,7 @@ public class Cypher {
                 int byteFromKey = fileInput.read();
                 // Test if end of file
                 if (byteFromKey == -1) {
-                    return "";
+                    return null;
                 }
                 santisedByte = sanitiseByte(byteFromKey);
                 // Test if byte representes a letter, discard
@@ -84,10 +82,10 @@ public class Cypher {
                     break;
                 }
             }
-            int shiftedLetter = text.get(i) - (santisedByte - asciiA);
+            int shiftedLetter = text.get(i) - (santisedByte - utfA);
 
-            if (shiftedLetter < asciiA) {
-                shiftedLetter += asciiRange;
+            if (shiftedLetter < utfA) {
+                shiftedLetter += utfRange;
             }
             plainText.append((char) shiftedLetter);
         }
@@ -110,12 +108,12 @@ public class Cypher {
 
     // Parameter is of type int because a byte read from
     // FileInputStream is returned as int.
-    // Non-letter characters arg returns -1, otherwise
-    // returns int representing uppercase letter.
+    // Passing a non-letter character returns -1, otherwise
+    // returns an int representing an uppercase letter.
     private int sanitiseByte(int b) {
         final int deltaUpperLowerCase = 32;
 
-        if (b >= asciiA && b <= asciiZ) {
+        if (b >= utfA && b <= utfZ) {
             return b;
         }
         if (b >= (int) 'a' && b <= (int) 'z') {
